@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+function startSpider(sid) {
+    $.get('/api/spider/' + sid + '/star', {}, function(data) {
+        location.reload();
+    });
+}
+</script>
+<h3>Registered Spiders</h3>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Spider</th>
+                    <th>State</th>
+                    <th>PID</th>
+                    <th>PID Live</th>
+                    <th>Commands</th>
+                </tr>
+            </thead>
+            {% for spider in spiders %}
+            <tr>
+                <td>{{ spider.project_name }}</td>
+                <td>{{ spider.spider_name }}</td>
+                <td>{{ spider.state }}</td>
+                <td>{{ spider.pid }}</td>
+                <td>{{ spider.pid_live }}</td>
+                <td>
+                    <a class="btn btn-info btn-xs" href="#" onclick="startSpider('{{ spider.id }}'); return false">Start</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
